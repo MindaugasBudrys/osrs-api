@@ -83,6 +83,19 @@ hiscores.getPlayer({ name: "Sadie Miller", type: hiscores.playerTypes.hardcoreIr
 
 Used to retrieve multiple players' hiscore entries.
 
+#### `createHiscoresInterface(axiosInstance)`
+
+Used to create a new interface using a custom instance of `axios`. Exposes `getPlayer` and `getPlayers`.
+
+##### Example
+
+```javascript
+const axios = require("axios");
+const { hiscores } = require("osrs-api");
+
+const hiscoresInterface = hiscores.createHiscoresInterface(axios.create());
+```
+
 ### Grand Exchange
 
 #### `getItem(itemId)`
@@ -146,4 +159,17 @@ grandExchange.getGraph(2).then(console.log).catch(console.error);
     1522195200000: 169
   }
 }
+```
+
+#### `createGrandExchangeInterface(axiosInstance)`
+
+Used to create a new interface using a custom instance of `axios`. Exposes `getItem` and `getGraph`.
+
+##### Example
+
+```javascript
+const axios = require("axios");
+const { grandExchange } = require("osrs-api");
+
+const grandExchangeInterface = grandExchange.createGrandExchangeInterface(axios.create());
 ```
