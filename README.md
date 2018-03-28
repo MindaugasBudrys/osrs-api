@@ -147,3 +147,9 @@ grandExchange.getGraph(2).then(console.log).catch(console.error);
   }
 }
 ```
+
+## Planned Features
+
+### Further Configuration
+
+The ability to specify the URLs used by the client in the event that a proxy is needed or in the event that Jagex's URLs change.
