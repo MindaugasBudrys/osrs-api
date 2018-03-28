@@ -3,7 +3,7 @@ A node.js-based wrapper for [OSRS](http://oldschool.runescape.com/)'s hiscores A
 
 ## Installation 
 ```
-$ npm install --save osrs-wrapper
+$ npm install --save osrs-api
 ```
 
 ## Usage
