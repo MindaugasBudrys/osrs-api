@@ -1,27 +1,17 @@
 {
-  "name": "osrs-wrapper",
-  "version": "1.0.3",
-  "description": "A simple wrapper around the Old School Runescape API",
+  "name": "osrs-api",
+  "version": "0.0.1",
+  "description": "A wrapper for OSRS's hiscores API and Grand Exchange API.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
-    "Old-School Runescape",
-    "OSRS",
-    "API"
+    "osrs",
+    "runescape",
+    "api"
   ],
-  "author": "atJeff",
+  "author": "Steven Goodman (https://fat.dog) <steve@fat.dog>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/atjeff/Osrs-Wrapper"
-  },
-  "bugs": {
-    "url": "https://github.com/atjeff/Osrs-Wrapper/issues"
-  },
+  "repository": "Bardiches/osrs-api",
   "dependencies": {
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1"
+    "axios": "^0.18.0"
   }
 }

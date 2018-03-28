@@ -1,321 +1,149 @@
-# Osrs-Wrapper
-Simple wrapper around the [Old School Runescape](http://oldschool.runescape.com/) API
+# osrs-api
+A node.js-based wrapper for [OSRS](http://oldschool.runescape.com/)'s hiscores API and Grand Exchange API. Forked from [atjeff/Osrs-Wrapper](https://github.com/atjeff/Osrs-Wrapper).
 
-### Dependencies
-* [Request](https://www.npmjs.com/package/request)
-* [Request-Promise](https://www.npmjs.com/package/request-promise)
-
-### Installation 
+## Installation 
 ```
 $ npm install --save osrs-wrapper
 ```
 
 ## Usage
 
-This wrapper interacts with the following Old-School APIs:
-* Hiscores
-* Grand Exchange
+### Hiscores
 
-#### Hiscores
-##### getPlayer(username, type)
-Used to lookup a players skills and minigame stats.  Accepts:
-* Normal (Default)
-* Ironman
-* Hardcore Ironman
-* Ultimate Ironman
-* Deadman
-* Deadman Seasonal
+#### `playerTypes`
 
-An example of getting a player's hiscore data:
+For convenience, the following object is exported containing valid player types:
+
 ```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.hiscores.getPlayer("Macca P")
-    .then(player => {
-        console.log(JSON.stringify(player, null, 2));
-    });
-```
-Again, but with Hardcore Ironman Hiscores
-```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.hiscores.getPlayer("Buy Tayrocs", "Hardcore")
-    .then(player => {
-        console.log(JSON.stringify(player, null, 2));
-    });
-```
-
-Output: 
-```json
 {
-  "Skills": {
-    "Overall": {
-      "rank": 1486,
-      "level": 1007,
-      "xp": 4250647
-    },
-    "Attack": {
-      "rank": 2351,
-      "level": 50,
-      "xp": 102206
-    },
-    "Defence": {
-      "rank": 2435,
-      "level": 44,
-      "xp": 58769
-    },
-    "Strength": {
-      "rank": 2537,
-      "level": 49,
-      "xp": 99642
-    },
-    "Hitpoints": {
-      "rank": 2084,
-      "level": 53,
-      "xp": 145405
-    },
-    "Ranged": {
-      "rank": 2965,
-      "level": 40,
-      "xp": 37236
-    },
-    "Prayer": {
-      "rank": 1553,
-      "level": 43,
-      "xp": 54812
-    },
-    "Magic": {
-      "rank": 232,
-      "level": 68,
-      "xp": 662199
-    },
-    "Cooking": {
-      "rank": 8615,
-      "level": 35,
-      "xp": 23029
-    },
-    "Woodcutting": {
-      "rank": 6268,
-      "level": 47,
-      "xp": 80076
-    },
-    "Fletching": {
-      "rank": 5425,
-      "level": 27,
-      "xp": 10670
-    },
-    "Fishing": {
-      "rank": 8374,
-      "level": 39,
-      "xp": 36137
-    },
-    "Firemaking": {
-      "rank": 5897,
-      "level": 46,
-      "xp": 72190
-    },
-    "Crafting": {
-      "rank": 1067,
-      "level": 51,
-      "xp": 113581
-    },
-    "Smithing": {
-      "rank": 2729,
-      "level": 39,
-      "xp": 37104
-    },
-    "Mining": {
-      "rank": 2573,
-      "level": 49,
-      "xp": 92260
-    },
-    "Herblore": {
-      "rank": 2153,
-      "level": 23,
-      "xp": 6840
-    },
-    "Agility": {
-      "rank": 83,
-      "level": 78,
-      "xp": 1691858
-    },
-    "Thieving": {
-      "rank": 4763,
-      "level": 39,
-      "xp": 37219
-    },
-    "Slayer": {
-      "rank": 5415,
-      "level": 9,
-      "xp": 1000
-    },
-    "Farming": {
-      "rank": 2910,
-      "level": 17,
-      "xp": 3500
-    },
-    "Runecrafting": {
-      "rank": 76,
-      "level": 48,
-      "xp": 87920
-    },
-    "Hunter": {
-      "rank": 349,
-      "level": 70,
-      "xp": 746365
-    },
-    "Construction": {
-      "rank": 333,
-      "level": 43,
-      "xp": 50629
-    }
-  },
-  "Minigames": {
-    "Bounty_Hunter": {
-      "rank": -1,
-      "score": -1
-    },
-    "Bounty_Hunter_Rogues": {
-      "rank": -1,
-      "score": -1
-    },
-    "LMS": {
-      "rank": -1,
-      "score": -1
-    }
+  normal: "normal",
+  ironman: "ironman",
+  ultimateIronman: "ultimate",
+  hardcoreIronman: "hardcore_ironman",
+  deadman: "deadman",
+  seasonal: "seasonal"
+}
+```
+
+#### `getPlayer({ name, type })`
+
+Used to retrieve a player's hiscore entry.
+
+##### Example
+
+```javascript
+const { hiscores } = require("osrs-api");
+
+hiscores.getPlayer({ name: "Sadie Miller", type: hiscores.playerTypes.hardcoreIronman }).then(console.log).catch(console.error);
+```
+
+##### Output
+
+```javascript
+{
+  name: "Sadie Miller",
+  type: "hardcore_ironman",
+  overall: { rank: "5399", level: "1200", experience: "7164307" },
+  attack: { rank: "4891", level: "64", experience: "448334" },
+  defence: { rank: "3799", level: "64", experience: "435491" },
+  strength: { rank: "4006", level: "70", experience: "749071" },
+  hitpoints: { rank: "5029", level: "66", experience: "538854" },
+  ranged: { rank: "9132", level: "48", experience: "88163" },
+  prayer: { rank: "7234", level: "44", experience: "56690" },
+  magic: { rank: "7309", level: "60", experience: "283069" },
+  cooking: { rank: "8854", level: "59", experience: "257180" },
+  woodcutting: { rank: "2869", level: "72", experience: "911090" },
+  fletching: { rank: "8171", level: "56", experience: "190596" },
+  fishing: { rank: "4647", level: "70", experience: "772902" },
+  firemaking: { rank: "19938", level: "61", experience: "312150" },
+  crafting: { rank: "6371", level: "51", experience: "121833" },
+  smithing: { rank: "4682", level: "52", experience: "124557" },
+  mining: { rank: "1486", level: "73", experience: "1016912" },
+  herblore: { rank: "3221", level: "50", experience: "106477" },
+  agility: { rank: "7425", level: "66", experience: "533348" },
+  thieving: { rank: "6968", level: "52", experience: "126391" },
+  slayer: { rank: "11707", level: "26", experience: "9100" },
+  farming: { rank: "3831", level: "45", experience: "66951" },
+  runecrafting: { rank: "12438", level: "14", experience: "2225" },
+  hunter: { rank: "25687", level: "9", experience: "1000" },
+  construction: { rank: "7707", level: "28", experience: "11923" },
+  easyClueScrolls: { rank: "-1", score: "-1" },
+  mediumClueScrolls: { rank: "-1", score: "-1" },
+  clueScrolls: { rank: "-1", score: "-1" },
+  bountyHunter: { rank: "-1", score: "-1" },
+  bountyHunterRogues: { rank: "-1", score: "-1" },
+  hardClueScrolls: { rank: "-1", score: "-1" },
+  lastManStanding: { rank: "-1", score: "-1" },
+  eliteClueScrolls: { rank: "-1", score: "-1" },
+  masterClueScrolls: { rank: "-1", score: "-1" }
+}
+```
+
+#### `getPlayers([{ name, type }, ...])`
+
+Used to retrieve multiple players' hiscore entries.
+
+### Grand Exchange
+
+#### `getItem(itemId)`
+
+Used to retrieve an item's Grand Exchange details.
+
+##### Example
+
+```javascript
+const { grandExchange } = require("osrs-api");
+
+grandExchange.getItem(2).then(console.log).catch(console.error);
+```
+
+##### Output
+
+```javascript
+{
+  item: {
+    icon: "http://services.runescape.com/m=itemdb_oldschool/1522058952475_obj_sprite.gif?id=2",
+    icon_large: "http://services.runescape.com/m=itemdb_oldschool/1522058952475_obj_big.gif?id=2",
+    id: 2,
+    type: "Default",
+    typeIcon: "http://www.runescape.com/img/categories/Default",
+    name: "Cannonball",
+    description: "Ammo for the Dwarf Cannon.",
+    current: { trend: "neutral", price: 166},
+    today: { trend: "positive", price: "+2" },
+    members: "true",
+    day30: { trend: "negative", change: "-8.0%"},
+    day90: { trend: "negative", change: "-11.0%"},
+    day180: { trend: "negative", change: "-8.0%"}
   }
 }
+```
 
+#### `getGraph(itemId)`
+
+Used to retrieve an item's Grand Exchange price data for the last six months.
+
+##### Example
+
+```javascript
+const { grandExchange } = require("osrs-api");
+
+grandExchange.getGraph(2).then(console.log).catch(console.error);
 ```
-##### getPlayers(usernames, type)
-Used to lookup multiple players skills and minigame stats. 
-"usernames" Accepts:
-* Array of usernames:
-```json
-["King Bulvi", "Macca P"]
-```
-* Array of Objects:
-```
-[{
-  "username": "King Bulvi" //type defaults to normal
-},{
-  "username": "Macca P",
-  "type": "normal"
-},
+
+##### Output
+
+```javascript
 {
-  "username": "Buy Tayrocs",
-  "type": "hardcore"
-}]
-```
-"type" Accepts:
-* Normal (Default)
-* Ironman
-* Hardcore Ironman
-* Ultimate Ironman
-* Deadman
-* Deadman Seasonal
-
-#### Grand Exchange
-##### getItem(item)
-Used to lookup an item's price, category and price trend.
-Accepts:
-* Item ID (integer)
-* Item Name (string)
-
-An example of getting an item's data by Item ID:
-```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.ge.getItem(4151)
-    .then(item => {
-        console.log(item);
-    });
-```
-Again, but with the Item Name:
-```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.ge.getItem("Abyssal Whip")
-    .then(item => {
-        console.log(item);
-    });
-```
-
-Output: 
-```json
-"item":{
-    "id":4151,
-    "icon":"http://services.runescape.com/m=itemdb_oldschool/1482156083699_obj_sprite.gif?id=4151",
-    "icon_large":"http://services.runescape.com/m=itemdb_oldschool/1482156083699_obj_big.gif?id=4151",
-    "type":"Default",
-    "typeIcon":"http://www.runescape.com/img/categories/Default",
-    "name":"Abyssal whip",
-    "description":"A weapon from the abyss.",
-    "current": {
-        "trend":"neutral",
-        "price":"1.8m"
-    },
-    "today": {
-        "trend":"negative",
-        "price":"- 828"
-    },
-    "members":"true",
-    "day30": {
-        "trend":"positive",
-        "change":"+13.0%"
-    },
-    "day90": {
-        "trend":"positive",
-        "change":"+5.0%"
-    },
-    "day180": {
-        "trend":"negative",
-        "change":"-18.0%"
-    }
+  daily: {
+    1506729600000: 186,
+    // ...
+    1522195200000: 166
+  },
+  average: {
+    1506729600000: 185,
+    // ...
+    1522195200000: 169
+  }
 }
 ```
-
-##### getGraph(item)
-Get's item's graph data for last 6 months.
-Accepts:
-* Item Id (integer)
-* Item Name (string)
-
-An example of getting an item's data by Item ID:
-```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.ge.getGraph(554)
-    .then(item => {
-        console.log(item);
-    });
-```
-Again, but with the Item Name:
-```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.ge.getGraph("Fire Rune")
-    .then(item => {
-        console.log(item);
-    });
-```
-
-##### getItems(items)
-Used to lookup an item's price, category and price trend.
-"items" Accepts:
-* Array of items (Item Name or ItemID):
-```json
-["Abyssal Whip", 2]
-```
-Example:
-```javascript
-const osrs = require("osrs-wrapper");
-
-osrs.ge.getItems(["Abyssal Whip", 2])
-    .then(items => {
-        console.log(JSON.parse(items));
-    });
-```
-
-## License
-`osrs-wrapper` is under the [MIT](http://opensource.org/licenses/MIT) license, see the `LICENSE` file for the copyright information and licensing terms.
