@@ -173,3 +173,7 @@ const { grandExchange } = require("osrs-api");
 
 const grandExchangeInterface = grandExchange.createGrandExchangeInterface(axios.create());
 ```
+
+## Future Plans/Features
+
+ - Translate all numeric values into JavaScript numerics
