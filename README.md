@@ -177,3 +177,4 @@ const grandExchangeInterface = grandExchange.createGrandExchangeInterface(axios.
 ## Future Plans/Features
 
  - Translate all numeric values into JavaScript numerics
+ - Different forms of output for hiscores (`({ skills: [], minigames: [] })` or `({ skills: {}, minigames: {} })`)
