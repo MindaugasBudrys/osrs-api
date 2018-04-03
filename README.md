@@ -1,4 +1,6 @@
 # osrs-api
+![npm](https://img.shields.io/npm/v/osrs-api.svg)
+
 A node.js-based wrapper for [OSRS](http://oldschool.runescape.com/)'s hiscores API and Grand Exchange API. Forked from [atjeff/Osrs-Wrapper](https://github.com/atjeff/Osrs-Wrapper).
 
 ## Installation 
